@@ -1,0 +1,18 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /neo4j
+
+spring:
+  profiles:
+    active: dev
+
+  neo4j:
+    uri: bolt://192.168.188.212:7687
+    authentication:
+      username: neo4j
+      password: xakj!@#123
+
+
+knife4j:
+  enable: true
