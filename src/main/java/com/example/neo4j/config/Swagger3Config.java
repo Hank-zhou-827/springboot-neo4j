@@ -33,7 +33,7 @@ public class Swagger3Config {
         return new ApiInfoBuilder()
                 .title("Neo4jDemo接口文档")
                 .description("Neo4jDemo接口明细")
-                .contact(new Contact("消安科技", "http://www.xiaofangyun.com.cn/", ""))
+                .contact(new Contact("hank", "https://github.com/Hank-zhou-827/springboot-neo4j", ""))
                 .version("1.0.0")
                 .build();
     }
