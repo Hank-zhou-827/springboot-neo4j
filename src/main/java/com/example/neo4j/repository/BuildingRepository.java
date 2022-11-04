@@ -6,6 +6,7 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -23,5 +24,5 @@ public interface BuildingRepository extends Neo4jRepository<Building, Long> {
      * @return
      */
     @Query("MATCH r=(Building{name: $name})-[*..25]-() RETURN r")
-    Optional<Object> findRelationship(String name);
+    List<Optional<Object>> findRelationship(String name);
 }

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,13 +51,18 @@ public class BuildingServiceImpl implements IBuildingService {
 
     @Override
     public Object findRelationship(String name) {
-        Optional<Object> optional = buildingRepository.findRelationship(name);
-        PathValue pathValue = (PathValue) optional.orElse(null);
-        Path path = pathValue.asPath();
-        List<Object> nodeList = Neo4jUtils.iteratorToList(path.nodes());
-        List<Object> relationshipList = Neo4jUtils.iteratorToList(path.relationships());
-        List<Object> segmentList = Neo4jUtils.segmentsToList(path.iterator());
+        List<Optional<Object>> optionals = buildingRepository.findRelationship(name);
         JSONObject jsonObject = new JSONObject();
+        List<Object> nodeList = new ArrayList<>();
+        List<Object> relationshipList =new ArrayList<>();
+        List<Object> segmentList = new ArrayList<>();
+        optionals.stream().forEach(optional -> {
+            PathValue pathValue = (PathValue) optional.orElse(null);
+            Path path = pathValue.asPath();
+            nodeList.addAll(Neo4jUtils.iteratorToList(path.nodes()));
+            relationshipList.addAll(Neo4jUtils.iteratorToList(path.relationships()));
+            segmentList.addAll(Neo4jUtils.segmentsToList(path.iterator()));
+        });
         jsonObject.put("nodes", nodeList);
         jsonObject.put("relationships", relationshipList);
         jsonObject.put("segments", segmentList);
